@@ -29,7 +29,7 @@ export const Login = () => {
         <button className="bg-slate-900 mt-4 text-white py-1.5 px-4 w-48">
           Login as Guest
         </button>
-        <p className="text-lg mt-2">Don't have an account ? <Link to='/' className="underline text-slate-900" >Signup</Link></p>
+        <p className="text-lg mt-2">Don't have an account ? <Link to='/signup' className="underline text-slate-900" >Signup</Link></p>
       </form>
     </div>
   );
