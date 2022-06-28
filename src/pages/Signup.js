@@ -1,9 +1,35 @@
-import React from 'react'
-import {Link} from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { signUp } from "../features/authSlice";
 export const Signup = () => {
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+    confirmPassword: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+
+  const dispatch = useDispatch();
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    dispatch(signUp(form));
+  };
+
   return (
     <div className="flex justify-center items-center flex-col h-screen">
-      <form className="flex flex-col justify-center items-center w-96 border-2 border-slate-900  ">
+      <form
+        className="flex flex-col justify-center items-center w-96 border-2 border-slate-900  "
+        onSubmit={handleSignUp}
+      >
         <p className="text-2xl mb-2">Signup</p>
         <label htmlFor="email">
           <span className="block text-xl mb-2"> Email</span>
@@ -12,6 +38,9 @@ export const Signup = () => {
             id="email"
             placeholder="Email"
             className="border border-indigo-300"
+            name="email"
+            value={form.email}
+            onChange={handleFormChange}
           />
         </label>
         <label htmlFor="first-name" className="block">
@@ -21,6 +50,9 @@ export const Signup = () => {
             id="first-name"
             placeholder="First Name"
             className="border border-indigo-300"
+            name="firstName"
+            value={form.firstName}
+            onChange={handleFormChange}
           />
         </label>
         <label htmlFor="last-name" className="block">
@@ -30,6 +62,9 @@ export const Signup = () => {
             id="last-name"
             placeholder="Last Name"
             className="border border-indigo-300"
+            name="lastName"
+            value={form.lastName}
+            onChange={handleFormChange}
           />
         </label>
         <label htmlFor="user-name" className="block">
@@ -39,6 +74,9 @@ export const Signup = () => {
             id="user-name"
             placeholder="User Name"
             className="border border-indigo-300"
+            name="username"
+            value={form.username}
+            onChange={handleFormChange}
           />
         </label>
         <label htmlFor="password" className="block">
@@ -48,6 +86,9 @@ export const Signup = () => {
             id="password"
             placeholder="Password"
             className="border border-indigo-300"
+            name="password"
+            value={form.password}
+            onChange={handleFormChange}
           />
         </label>
         <label htmlFor="confirm-password" className="block">
@@ -57,10 +98,16 @@ export const Signup = () => {
             id="confirm-password"
             placeholder="Confirm Password"
             className="border border-indigo-300"
+            name="confirmPassword"
+            value={form.confirmPassword}
+            onChange={handleFormChange}
           />
         </label>
-        <button className="bg-slate-900 mt-4 text-white py-1.5 px-4 w-48">
-          Login
+        <button
+          className="bg-slate-900 mt-4 text-white py-1.5 px-4 w-48"
+          type="submit"
+        >
+          Signup
         </button>
         <p className="text-lg mt-2">
           Already a user ?{" "}
@@ -71,4 +118,4 @@ export const Signup = () => {
       </form>
     </div>
   );
-}
+};
