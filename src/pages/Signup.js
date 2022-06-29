@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../features/authSlice";
+
 export const Signup = () => {
   const [form, setForm] = useState({
     username: "",
@@ -13,6 +14,8 @@ export const Signup = () => {
   });
 
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -23,6 +26,12 @@ export const Signup = () => {
     e.preventDefault();
     dispatch(signUp(form));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
 
   return (
     <div className="flex justify-center items-center flex-col h-screen">

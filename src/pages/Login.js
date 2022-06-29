@@ -1,10 +1,15 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../features/authSlice";
+import { useLocation } from "react-router-dom";
+
 export const Login = () => {
   const [form, setForm] = useState({ username: "", password: "" });
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -15,6 +20,11 @@ export const Login = () => {
     e.preventDefault();
     dispatch(login(form));
   };
+  useEffect(() => {
+    if (user) {
+      navigate(location.state?.from?.pathname ?? "/", { replace: true });
+    }
+  }, [navigate, user, location]);
 
   const handleGuestLogin = (e) => {
     e.preventDefault();
