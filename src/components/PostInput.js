@@ -1,5 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { showModal } from "../features/modalSlice";
 export const PostInput = () => {
+  const dispatch  = useDispatch();
+
+  const clickHandler = () => {
+    dispatch(showModal());
+  };
+
   return (
     <div className="bg-slate-900 p-2">
       <div className="flex">
@@ -8,11 +16,12 @@ export const PostInput = () => {
           alt="avatar"
           className=" rounded-full h-14 w-14 "
         />
-        <input
-          type="text"
-          placeholder="Post Karo"
-          className="border-2 ml-4 w-full"
-        />
+        <div
+          className="border-2 ml-4 w-full bg-white capitalize cursor-pointer"
+          onClick={clickHandler}
+        >
+          what is in your mind?
+        </div>
       </div>
     </div>
   );

@@ -7,3 +7,4 @@ export {SuggestedUsers} from './SuggestedUsers';
 export {PostInput} from './PostInput';
 export {SortBy} from './SortBy';
 export {PostCard} from './PostCard';
+export {Modal} from './Modal';
