@@ -7,7 +7,7 @@ import { addPost, editPost } from "../features/postSlice";
 
 export const Modal = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const {user:{firstName, lastName}, token} = useSelector((state) => state.auth);
   const { setContent } = useSelector((state) => state.modal);
   const [postInput, setPostInput] = useState("");
   const { content, _id } = setContent;
@@ -31,7 +31,7 @@ export const Modal = () => {
   };
 
   const addPostHandler = () => {
-    dispatch(addPost({ postInput, token }));
+    dispatch(addPost({ postInput, token, firstName, lastName }));
     dispatch(closeModal());
   };
 

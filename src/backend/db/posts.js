@@ -17,6 +17,8 @@ export const posts = [
       dislikedBy: [],
     },
     username: "adarshbalika",
+    firstName: "Adarsh",
+    lastName: "Balika",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     comments: [
@@ -42,14 +44,15 @@ export const posts = [
   },
   {
     _id: uuid(),
-    content:
-      "Learning",
+    content: "Learning",
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
     username: "sharmaryan",
+    firstName: "Aryan",
+    lastName: "Sharma",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     comments: [
@@ -75,14 +78,15 @@ export const posts = [
   },
   {
     _id: uuid(),
-    content:
-      "This is my content",
+    content: "This is my content",
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
     username: "sharmaryan",
+    firstName: "Aryan",
+    lastName: "Sharma",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     comments: [
@@ -116,6 +120,8 @@ export const posts = [
       dislikedBy: [],
     },
     username: "shubhamsoni",
+    firstName: "Shubham",
+    lastName: "Soni",
 
     comments: [
       {
