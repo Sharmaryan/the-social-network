@@ -2,7 +2,8 @@ import React from "react";
 import { deletePost } from "../features/postSlice";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { showModal } from "../features/modalSlice";
-export const EditDeletePostModal = ({ _id }) => {
+export const EditDeletePostModal = ({ ...post }) => {
+  const { _id } = post;
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -11,8 +12,7 @@ export const EditDeletePostModal = ({ _id }) => {
   };
 
   const editPostHandler = () => {
-    dispatch(showModal()); 
-    
+    dispatch(showModal(post));
   };
   return (
     <div className="bg-white w-24 absolute right-2 top-12 flex flex-col">

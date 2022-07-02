@@ -84,6 +84,9 @@ const postSlice = createSlice({
     [deletePost.fulfilled]: (state, { payload }) => {
       state.posts = payload.posts;
     },
+    [editPost.fulfilled]: (state, { payload }) => {
+      state.posts = payload.posts;
+    },
 
   },
 });

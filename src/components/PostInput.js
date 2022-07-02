@@ -1,11 +1,12 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { showModal } from "../features/modalSlice";
+import { showModal, emptyContent } from "../features/modalSlice";
 export const PostInput = () => {
   const dispatch  = useDispatch();
 
   const clickHandler = () => {
     dispatch(showModal());
+    dispatch(emptyContent());
   };
 
   return (

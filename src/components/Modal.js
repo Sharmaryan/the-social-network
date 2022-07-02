@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ImCross } from "react-icons/im";
 import { GrEmoji, GrImage } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../features/modalSlice";
-import { addPost } from "../features/postSlice";
+import { addPost, editPost } from "../features/postSlice";
 
 export const Modal = () => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
+  const { setContent } = useSelector((state) => state.modal);
   const [postInput, setPostInput] = useState("");
+  const { content, _id } = setContent;
+
+  useEffect(() => {
+    setPostInput(content);
+  }, [content]);
 
   const modalCloseHandler = () => {
     dispatch(closeModal());
@@ -23,7 +29,10 @@ export const Modal = () => {
     dispatch(closeModal());
   };
 
-  const editUpdateHandler = () => {};
+  const updatePostHandler = () => {
+    dispatch(editPost({ postInput, token, _id }));
+    dispatch(closeModal());
+  };
 
   const cancelModal = () => {
     dispatch(closeModal());
@@ -48,13 +57,21 @@ export const Modal = () => {
           <GrEmoji />
           <GrImage />
           <span>0/150</span>
-         
-          <button
-            className="capitalize bg-slate-900 text-white px-4 py-2"
-            onClick={addPostHandler}
-          >
-            add post
-          </button>
+          {content ? (
+            <button
+              className="capitalize bg-slate-900 text-white px-4 py-2"
+              onClick={updatePostHandler}
+            >
+              update
+            </button>
+          ) : (
+            <button
+              className="capitalize bg-slate-900 text-white px-4 py-2"
+              onClick={addPostHandler}
+            >
+              add post
+            </button>
+          )}
           <button
             className="capitalize bg-slate-900 text-white px-4 py-2"
             onClick={cancelModal}

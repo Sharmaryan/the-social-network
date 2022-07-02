@@ -5,11 +5,12 @@ import { FaComments, FaShareAlt } from "react-icons/fa";
 import { EditDeletePostModal } from "./EditDeletePostModal";
 import { useSelector } from "react-redux";
 
-export const PostCard = ({ content, username, _id }) => {
+export const PostCard = ({ ...post }) => {
+  const {_id,username, content} = post;
   const [showModal, setShowModal] = useState(false);
   const user = useSelector((state) => state.auth);
-  // console.log(user.user.username)
-  const editDeletePostModalHandler = () => {
+
+  const editDeletePostModalHandler = (_id) => {
     setShowModal((prev) => !prev);
   };
 
@@ -25,11 +26,11 @@ export const PostCard = ({ content, username, _id }) => {
           <h2 className="text-white capitalize">aryan sharma</h2>
           <p className="text-white">@{username}</p>
         </div>
-        {showModal && <EditDeletePostModal _id={_id} />}
+        {showModal && <EditDeletePostModal {...post} />}
         {user.user.username === username && (
           <BsThreeDots
             className="text-white capitalize ml-auto mr-2 text-lg cursor-pointer"
-            onClick={editDeletePostModalHandler}
+            onClick={() => editDeletePostModalHandler(_id)}
           />
         )}
       </div>
