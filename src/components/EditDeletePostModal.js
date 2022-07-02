@@ -1,6 +1,6 @@
 import React from "react";
 import { deletePost } from "../features/postSlice";
-import { useDispatch, useSelector } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux";
 import { showModal } from "../features/modalSlice";
 export const EditDeletePostModal = ({ ...post }) => {
   const { _id } = post;
