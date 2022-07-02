@@ -12,10 +12,16 @@ export const Modal = () => {
   const [postInput, setPostInput] = useState("");
   const { content, _id } = setContent;
 
+  const changeButtonColor =
+    postInput === undefined || postInput.length === 0
+      ? "bg-slate-500 text-black"
+      : "bg-slate-900 text-white";
+
+  const disableButton = postInput === undefined || postInput.length === 0;
+
   useEffect(() => {
     setPostInput(content);
   }, [content]);
-
   const modalCloseHandler = () => {
     dispatch(closeModal());
   };
@@ -49,25 +55,30 @@ export const Modal = () => {
           />
         </div>
         <textarea
-          className='"overflow-auto h-24 w-full resize-none'
+          className='overflow-auto h-24 w-full resize-none'
           value={postInput}
           onChange={postHandler}
+          maxLength={150}
         ></textarea>
         <div className="flex justify-between items-center mt-4">
           <GrEmoji />
           <GrImage />
-          <span>0/150</span>
+          <span>
+            {postInput === undefined ? 150 : `${150 - postInput.length}`}/150
+          </span>
           {content ? (
             <button
-              className="capitalize bg-slate-900 text-white px-4 py-2"
               onClick={updatePostHandler}
+              className={`capitalize px-4 py-2 ${changeButtonColor}`}
+              disabled={disableButton}
             >
               update
             </button>
           ) : (
             <button
-              className="capitalize bg-slate-900 text-white px-4 py-2"
+              className={`capitalize px-4 py-2 ${changeButtonColor}`}
               onClick={addPostHandler}
+              disabled={disableButton}
             >
               add post
             </button>
