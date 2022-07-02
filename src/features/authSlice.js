@@ -4,6 +4,7 @@ const initialState = {
   user: null,
   error: null,
   isLoading: false,
+  token: null,
 };
 
 export const login = createAsyncThunk(
@@ -12,6 +13,7 @@ export const login = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/auth/login", login);
       localStorage.setItem("token", data.encodedToken);
+    
       return data;
     } catch (err) {
       return rejectWithValue("invalid login credentials");
@@ -24,6 +26,7 @@ export const signUp = createAsyncThunk(
   async (signUp, { rejectWithValue }) => {
     try {
       const { data } = await axios.post("/api/auth/signup", signUp);
+      console.log(data);
       localStorage.setItem("token", data.encodedToken);
       return data;
     } catch (err) {
@@ -44,10 +47,12 @@ const authSlice = createSlice({
       state.user = payload.foundUser;
       state.isLoading = false;
       state.error = "";
+      state.token = payload.encodedToken;
     },
     [login.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
+      state.token = null;
     },
     [signUp.pending]: (state) => {
       state.isLoading = true;
@@ -56,10 +61,12 @@ const authSlice = createSlice({
       state.user = payload.createdUser;
       state.isLoading = false;
       state.error = "";
+      state.token = payload.encodedToken;
     },
     [signUp.rejected]: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
+      state.token = null;
     },
   },
 });
