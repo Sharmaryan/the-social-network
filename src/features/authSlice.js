@@ -13,7 +13,7 @@ export const login = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/auth/login", login);
       localStorage.setItem("token", data.encodedToken);
-      console.log(data)
+    
       return data;
     } catch (err) {
       return rejectWithValue("invalid login credentials");
