@@ -4,13 +4,20 @@ import { GrEmoji, GrImage } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../features/modalSlice";
 import { addPost, editPost } from "../features/postSlice";
-
+import dayjs from 'dayjs';
 export const Modal = () => {
   const dispatch = useDispatch();
   const {user:{firstName, lastName}, token} = useSelector((state) => state.auth);
   const { setContent } = useSelector((state) => state.modal);
   const [postInput, setPostInput] = useState("");
   const { content, _id } = setContent;
+  const getDate = () => {
+    const date = new Date();
+    const newDate = dayjs(date).toISOString();
+    return newDate;
+  }
+
+  const formattedDate = getDate();
 
   const changeButtonColor =
     postInput === undefined || postInput.length === 0
@@ -30,8 +37,10 @@ export const Modal = () => {
     setPostInput(e.target.value);
   };
 
+
+
   const addPostHandler = () => {
-    dispatch(addPost({ postInput, token, firstName, lastName }));
+    dispatch(addPost({ postInput, token, firstName, lastName, formattedDate }));
     dispatch(closeModal());
   };
 

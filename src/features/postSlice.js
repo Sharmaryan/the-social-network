@@ -8,13 +8,23 @@ const initialState = {
 
 export const addPost = createAsyncThunk(
   "post/addPost",
-  async ({ postInput, token, firstName, lastName }, { rejectWithValue }) => {
+  async (
+    { postInput, token, firstName, lastName, formattedDate },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios({
         method: "post",
         url: "api/posts",
         headers: { authorization: token },
-        data: { postData: { content: postInput, firstName, lastName } },
+        data: {
+          postData: {
+            content: postInput,
+            firstName,
+            lastName,
+            createdAt: formattedDate,
+          },
+        },
       });
       return response.data;
     } catch (err) {

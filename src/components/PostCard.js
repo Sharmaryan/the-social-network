@@ -4,13 +4,19 @@ import { AiFillLike } from "react-icons/ai";
 import { FaComments, FaShareAlt } from "react-icons/fa";
 import { EditDeletePostModal } from "./EditDeletePostModal";
 import { useSelector } from "react-redux";
-
 export const PostCard = ({ ...post }) => {
-  const {_id,username, content, lastName, firstName} = post;
+  const { _id, username, content, lastName, firstName, createdAt } = post;
   const [showModal, setShowModal] = useState(false);
-  const {user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const editDeletePostModalHandler = (_id) => {
     setShowModal((prev) => !prev);
+  };
+
+  const getFormattedDate = () => {
+    console.log(createdAt)
+    let date = new Date(createdAt);
+    date = String(date).split(' ');
+    return `${date[2]} ${date[1]}`;
   };
 
   return (
@@ -22,9 +28,12 @@ export const PostCard = ({ ...post }) => {
           className=" rounded-full h-14 w-14 "
         />
         <div className="ml-8">
-          <h2 className="text-white capitalize">{firstName} {lastName}</h2>
+          <h2 className="text-white capitalize">
+            {firstName} {lastName}
+          </h2>
           <p className="text-white">@{username}</p>
         </div>
+          <p className="text-white ml-8">{getFormattedDate()}</p>
         {showModal && <EditDeletePostModal {...post} />}
         {user.username === username && (
           <BsThreeDots
