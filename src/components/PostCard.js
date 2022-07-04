@@ -6,14 +6,13 @@ import { EditDeletePostModal } from "./EditDeletePostModal";
 import { useSelector } from "react-redux";
 export const PostCard = ({ ...post }) => {
   const { _id, username, content, lastName, firstName, createdAt } = post;
-  const [showModal, setShowModal] = useState(false);
+  const [showEditDeleteModal, setShowEditDeleteModal] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const editDeletePostModalHandler = (_id) => {
-    setShowModal((prev) => !prev);
+    setShowEditDeleteModal((prev) => !prev);
   };
 
   const getFormattedDate = () => {
-    console.log(createdAt)
     let date = new Date(createdAt);
     date = String(date).split(' ');
     return `${date[2]} ${date[1]}`;
@@ -34,7 +33,7 @@ export const PostCard = ({ ...post }) => {
           <p className="text-white">@{username}</p>
         </div>
           <p className="text-white ml-8">{getFormattedDate()}</p>
-        {showModal && <EditDeletePostModal {...post} />}
+        {showEditDeleteModal && <EditDeletePostModal post={post} setShowEditDeleteModal={setShowEditDeleteModal}/>}
         {user.username === username && (
           <BsThreeDots
             className="text-white capitalize ml-auto mr-2 text-lg cursor-pointer"
