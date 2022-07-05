@@ -5,7 +5,7 @@ import { FaComments, FaShareAlt } from "react-icons/fa";
 import { EditDeletePostModal } from "./EditDeletePostModal";
 import { useSelector } from "react-redux";
 export const PostCard = ({ ...post }) => {
-  const { _id, username, content, lastName, firstName, createdAt } = post;
+  const { _id, username, content, lastName, firstName, createdAt,likes } = post;
   const [showEditDeleteModal, setShowEditDeleteModal] = useState(false);
   const { user } = useSelector((state) => state.auth);
   const editDeletePostModalHandler = (_id) => {
@@ -42,15 +42,10 @@ export const PostCard = ({ ...post }) => {
         )}
       </div>
       <p className="text-white my-2">{content}</p>
-      <img
-        src="https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&w=1000&q=80"
-        alt="avatar"
-        className=" h-80 w-full mb-2"
-      />
       <div className="flex justify-around">
         <div className="flex items-center text-xl text-white">
           <AiFillLike />
-          <span className="ml-2">0</span>
+          <span className="ml-2">{likes.likeCount}</span>
         </div>
         <div className="flex items-center text-xl text-white">
           <FaComments />

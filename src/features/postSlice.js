@@ -4,6 +4,7 @@ import axios from "axios";
 
 const initialState = {
   posts: [],
+  sortBy: "",
 };
 
 export const addPost = createAsyncThunk(
@@ -84,10 +85,8 @@ const postSlice = createSlice({
   name: "post",
   initialState,
   reducers: {
-    sortByDate: state => {
-      state.posts = state.posts.sort(function (a, b) {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      });
+    sortPostsBy: (state, actions) => {
+      state.sortBy = actions.payload;
     },
   },
   extraReducers: {
@@ -107,4 +106,4 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
-export const { sortByDate } = postSlice.actions;
+export const { sortPostsBy } = postSlice.actions;
