@@ -2,7 +2,7 @@ import React from 'react'
 import { FaHome, FaUser, FaBookmark, FaCompass } from "react-icons/fa";
 export const Sidebar = () => {
   return (
-    <div className="border-2 border-slate-900 col-span-1 bg-slate-900 h-screen justify-self-end w-60 h-screen">
+    <div className="col-span-1 bg-slate-900 justify-self-end w-60 sticky top-[5rem] h-[32rem]">
       <div className="flex p-4 items-center">
         <FaHome className="text-lg text-white" />
         <p className="capitalize text-lg  text-white ml-4">home</p>

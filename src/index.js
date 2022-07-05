@@ -10,7 +10,6 @@ import { store } from "./store/store";
 // Call make Server
 makeServer();
 
-console.log(store.getState());
 const root = ReactDOMClient.createRoot(document.getElementById("root"));
 
 root.render(

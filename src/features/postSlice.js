@@ -4,17 +4,28 @@ import axios from "axios";
 
 const initialState = {
   posts: [],
+  sortBy: "",
 };
 
 export const addPost = createAsyncThunk(
   "post/addPost",
-  async ({ postInput, token }, { rejectWithValue }) => {
+  async (
+    { postInput, token, firstName, lastName, formattedDate },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios({
         method: "post",
         url: "api/posts",
         headers: { authorization: token },
-        data: { postData: { content: postInput } },
+        data: {
+          postData: {
+            content: postInput,
+            firstName,
+            lastName,
+            createdAt: formattedDate,
+          },
+        },
       });
       return response.data;
     } catch (err) {
@@ -25,7 +36,6 @@ export const addPost = createAsyncThunk(
 export const deletePost = createAsyncThunk(
   "post/deletePost",
   async ({ token, _id }, { rejectWithValue }) => {
- 
     try {
       const response = await axios({
         method: "delete",
@@ -34,14 +44,14 @@ export const deletePost = createAsyncThunk(
       });
       return response.data;
     } catch (err) {
-      console.log(err)
+      console.log(err);
       rejectWithValue("something went wrong");
     }
   }
 );
 export const editPost = createAsyncThunk(
   "post/editPost",
-  async ({ postInput, token,_id }, { rejectWithValue }) => {
+  async ({ postInput, token, _id }, { rejectWithValue }) => {
     try {
       const response = await axios({
         method: "post",
@@ -63,6 +73,7 @@ export const getPost = createAsyncThunk(
         method: "get",
         url: "api/posts",
       });
+
       return response.data;
     } catch (err) {
       rejectWithValue("something went wrong");
@@ -73,7 +84,11 @@ export const getPost = createAsyncThunk(
 const postSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    sortPostsBy: (state, actions) => {
+      state.sortBy = actions.payload;
+    },
+  },
   extraReducers: {
     [addPost.fulfilled]: (state, { payload }) => {
       state.posts = payload.posts;
@@ -87,8 +102,8 @@ const postSlice = createSlice({
     [editPost.fulfilled]: (state, { payload }) => {
       state.posts = payload.posts;
     },
-
   },
 });
 
 export const postReducer = postSlice.reducer;
+export const { sortPostsBy } = postSlice.actions;

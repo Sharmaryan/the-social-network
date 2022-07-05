@@ -4,18 +4,31 @@ import { GrEmoji, GrImage } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "../features/modalSlice";
 import { addPost, editPost } from "../features/postSlice";
-
+import dayjs from 'dayjs';
 export const Modal = () => {
   const dispatch = useDispatch();
-  const { token } = useSelector((state) => state.auth);
+  const {user:{firstName, lastName}, token} = useSelector((state) => state.auth);
   const { setContent } = useSelector((state) => state.modal);
   const [postInput, setPostInput] = useState("");
   const { content, _id } = setContent;
+  const getDate = () => {
+    const date = new Date();
+    const newDate = dayjs(date).toISOString();
+    return newDate;
+  }
+
+  const formattedDate = getDate();
+
+  const changeButtonColor =
+    postInput === undefined || postInput.length === 0
+      ? "bg-slate-500 text-black"
+      : "bg-slate-900 text-white";
+
+  const disableButton = postInput === undefined || postInput.length === 0;
 
   useEffect(() => {
     setPostInput(content);
   }, [content]);
-
   const modalCloseHandler = () => {
     dispatch(closeModal());
   };
@@ -24,8 +37,10 @@ export const Modal = () => {
     setPostInput(e.target.value);
   };
 
+
+
   const addPostHandler = () => {
-    dispatch(addPost({ postInput, token }));
+    dispatch(addPost({ postInput, token, firstName, lastName, formattedDate }));
     dispatch(closeModal());
   };
 
@@ -49,25 +64,30 @@ export const Modal = () => {
           />
         </div>
         <textarea
-          className='"overflow-auto h-24 w-full resize-none'
+          className='overflow-auto h-24 w-full resize-none'
           value={postInput}
           onChange={postHandler}
+          maxLength={150}
         ></textarea>
         <div className="flex justify-between items-center mt-4">
           <GrEmoji />
           <GrImage />
-          <span>0/150</span>
+          <span>
+            {postInput === undefined ? 150 : `${150 - postInput.length}`}/150
+          </span>
           {content ? (
             <button
-              className="capitalize bg-slate-900 text-white px-4 py-2"
               onClick={updatePostHandler}
+              className={`capitalize px-4 py-2 ${changeButtonColor}`}
+              disabled={disableButton}
             >
               update
             </button>
           ) : (
             <button
-              className="capitalize bg-slate-900 text-white px-4 py-2"
+              className={`capitalize px-4 py-2 ${changeButtonColor}`}
               onClick={addPostHandler}
+              disabled={disableButton}
             >
               add post
             </button>

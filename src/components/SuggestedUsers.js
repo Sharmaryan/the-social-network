@@ -2,7 +2,7 @@ import React from 'react'
 
 export const SuggestedUsers = () => {
   return (
-    <div className="col-span-1 border-2 justify-self-start w-60 bg-slate-900 py-2 h-screen">
+    <div className="col-span-1 justify-self-start w-60 bg-slate-900 py-2 h-60 sticky top-[5rem]">
       <h2 className="text-white text-center capitalize">people you may know</h2>
       <div className="flex mt-4">
         <img
