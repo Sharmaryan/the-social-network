@@ -11,7 +11,7 @@ export const EditDeletePostModal = ({ post, setShowEditDeleteModal }) => {
     dispatch(deletePost({ token, _id }));
     setShowEditDeleteModal(false);
   };
-
+ 
   const editPostHandler = () => {
     dispatch(showModal(post));
     setShowEditDeleteModal(false);

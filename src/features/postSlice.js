@@ -83,7 +83,13 @@ export const getPost = createAsyncThunk(
 const postSlice = createSlice({
   name: "post",
   initialState,
-  reducers: {},
+  reducers: {
+    sortByDate: state => {
+      state.posts = state.posts.sort(function (a, b) {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      });
+    },
+  },
   extraReducers: {
     [addPost.fulfilled]: (state, { payload }) => {
       state.posts = payload.posts;
@@ -101,3 +107,4 @@ const postSlice = createSlice({
 });
 
 export const postReducer = postSlice.reducer;
+export const { sortByDate } = postSlice.actions;
